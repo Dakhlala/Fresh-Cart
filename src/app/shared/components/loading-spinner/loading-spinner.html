@@ -1,0 +1,17 @@
+@if (loadingService.isLoading()) {
+  <!-- Top animated glowing indeterminate progress bar -->
+  <div class="fixed top-0 left-0 right-0 z-50 h-1 bg-primary-100 overflow-hidden">
+    <div class="h-full bg-primary-600 animate-[loading-bar_1.5s_infinite_linear] origin-left w-full"></div>
+  </div>
+}
+
+<style>
+  @keyframes loading-bar {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(100%);
+    }
+  }
+</style>

@@ -1,0 +1,102 @@
+<div
+  [routerLink]="['/products', product()._id || product().id]"
+  class="group relative flex flex-col justify-between bg-white rounded-2xl border border-gray-100 p-3 sm:p-4 hover:border-[#0aad0a] hover:shadow-xl transition-all duration-300 cursor-pointer overflow-hidden h-full"
+>
+  <!-- Optional Floating Discount Badge -->
+  @if (product().priceAfterDiscount && product().priceAfterDiscount! < product().price) {
+    <div class="absolute top-3 left-3 z-10 px-2 py-0.5 rounded-lg bg-red-500 text-white text-[10px] font-extrabold uppercase tracking-wider shadow-2xs">
+      SALE
+    </div>
+  }
+
+  <!-- Top-Right Wishlist Heart Button -->
+  <button
+    type="button"
+    (click)="toggleWishlist($event)"
+    [attr.aria-label]="isInWishlist() ? 'Remove from wishlist' : 'Add to wishlist'"
+    class="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs shadow-2xs hover:shadow-md flex items-center justify-center transition-all cursor-pointer group-hover:scale-110"
+  >
+    <i
+      [class]="isInWishlist() ? 'fas fa-heart text-red-500' : 'far fa-heart text-gray-400 hover:text-red-500'"
+      class="text-sm transition-colors"
+    ></i>
+  </button>
+
+  <!-- Quick View Eye Button Matching Demo -->
+  <a
+    [routerLink]="['/products', product()._id || product().id]"
+    aria-label="Quick view"
+    class="absolute top-12 right-3 z-10 w-8 h-8 rounded-full bg-white/90 backdrop-blur-xs shadow-2xs hover:shadow-md flex items-center justify-center transition-all cursor-pointer opacity-0 group-hover:opacity-100 hover:scale-110 text-gray-500 hover:text-[#0aad0a]"
+  >
+    <i class="far fa-eye text-xs"></i>
+  </a>
+
+  <!-- Product Image Container -->
+  <div class="aspect-square w-full rounded-xl overflow-hidden bg-gray-50 mb-3 flex items-center justify-center p-2">
+    <img
+      [src]="product().imageCover"
+      [alt]="product().title"
+      loading="lazy"
+      class="aspect-square object-contain w-full h-full group-hover:scale-105 transition-transform duration-300"
+    />
+  </div>
+
+  <!-- Product Metadata & Pricing Body -->
+  <div class="space-y-1.5 flex-1 flex flex-col justify-between">
+    <div>
+      <span class="text-[#0aad0a] text-xs font-semibold uppercase tracking-wider block">
+        {{ product().category.name }}
+      </span>
+      <h3 class="line-clamp-1 font-medium text-gray-800 text-xs sm:text-sm group-hover:text-[#0aad0a] transition-colors leading-snug">
+        {{ product().title }}
+      </h3>
+    </div>
+
+    <!-- Rating & Price Row -->
+    <div class="pt-2">
+      <div class="flex items-center justify-between text-xs sm:text-sm mb-3">
+        <!-- Price in EGP -->
+        <div class="flex items-baseline gap-1">
+          <span class="font-bold text-gray-900 text-sm sm:text-base">
+            {{ product().price }}
+          </span>
+          <span class="text-xs font-normal text-gray-500">EGP</span>
+          @if (product().priceAfterDiscount) {
+            <span class="text-[11px] text-gray-400 line-through ml-1.5">
+              {{ product().price }} EGP
+            </span>
+          }
+        </div>
+
+        <!-- Star Rating -->
+        <div class="flex items-center gap-1 font-semibold text-xs">
+          <i class="fas fa-star text-[#ffc908] text-[11px]"></i>
+          <span class="text-gray-700 font-bold">{{ product().ratingsAverage }}</span>
+          @if (product().ratingsQuantity) {
+            <span class="text-[10px] text-gray-400 font-normal">({{ product().ratingsQuantity }})</span>
+          }
+        </div>
+      </div>
+
+      <!-- Full-Width Slide-Up "Add to Cart" Button -->
+      <div class="overflow-hidden rounded-xl mt-1">
+        <button
+          type="button"
+          (click)="addToCart($event)"
+          [disabled]="isAddingToCart()"
+          class="w-full bg-[#0aad0a] hover:bg-[#088c08] disabled:opacity-75 text-white py-2 px-3 rounded-xl text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 shadow-xs shadow-[#0aad0a]/20 hover:shadow-md hover:shadow-[#0aad0a]/30 transition-all duration-300 cursor-pointer active:scale-95 translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+          [class.!translate-y-0]="isAddingToCart()"
+          [class.!opacity-100]="isAddingToCart()"
+        >
+          @if (isAddingToCart()) {
+            <i class="fas fa-spinner fa-spin text-xs"></i>
+            <span>Adding...</span>
+          } @else {
+            <i class="fas fa-plus text-xs"></i>
+            <span>Add to Cart</span>
+          }
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

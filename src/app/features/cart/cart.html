@@ -1,0 +1,244 @@
+<div class="py-6 sm:py-10 space-y-8">
+
+  <!-- Header Banner: "Shop Cart", total items badge, total price in EGP (#0aad0a), "Clear Cart" button -->
+  <div class="bg-[#f0f3f2] p-6 sm:p-8 rounded-3xl border border-gray-200/60 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <div class="space-y-2">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-[#0aad0a] text-white flex items-center justify-center shadow-xs">
+          <i class="fa-solid fa-cart-shopping text-base"></i>
+        </div>
+        <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">Shop Cart</h1>
+      </div>
+      <p class="text-sm text-gray-500">
+        Review your chosen fresh items before proceeding to secure checkout.
+      </p>
+
+      @if (!isCartEmpty()) {
+        <div class="flex flex-wrap items-center gap-3 pt-1">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-[#0aad0a]/10 text-[#0aad0a] border border-[#0aad0a]/20">
+            <i class="fa-solid fa-box text-[10px]"></i>
+            <span>{{ numOfCartItems() }} Items</span>
+          </span>
+          <span class="text-sm text-gray-600 font-medium">
+            Total Price:
+            <span class="text-lg font-extrabold text-[#0aad0a] ml-1">{{ totalCartPrice() }} EGP</span>
+          </span>
+        </div>
+      }
+    </div>
+
+    @if (!isCartEmpty()) {
+      <button
+        type="button"
+        (click)="clearCart()"
+        [disabled]="isClearing() || updatingItemId() !== null"
+        class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 text-xs font-semibold transition-all cursor-pointer shadow-2xs disabled:opacity-50 disabled:cursor-not-allowed shrink-0"
+        aria-label="Clear Cart"
+      >
+        @if (isClearing()) {
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <span>Clearing Cart...</span>
+        } @else {
+          <i class="fa-regular fa-trash-can"></i>
+          <span>Clear Cart</span>
+        }
+      </button>
+    }
+  </div>
+
+  <!-- Initial Loading State -->
+  @if (isInitialLoading() && !cartData()) {
+    <div class="py-24 flex flex-col items-center justify-center gap-3 text-[#0aad0a]">
+      <i class="fa-solid fa-spinner fa-spin text-4xl"></i>
+      <span class="text-sm font-semibold text-gray-600">Loading your cart...</span>
+    </div>
+  } @else if (isCartEmpty()) {
+    <!-- Empty Cart State: illustration, "Your cart is empty!", and "Continue Shopping" CTA to /products -->
+    <div class="text-center py-20 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200 max-w-2xl mx-auto p-8 my-6">
+      <div class="w-24 h-24 bg-[#0aad0a]/10 text-[#0aad0a] rounded-3xl flex items-center justify-center mx-auto mb-6 text-4xl shadow-2xs">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Your cart is empty!</h2>
+      <p class="text-sm text-gray-500 max-w-md mx-auto mt-2 leading-relaxed">
+        Looks like you haven't added anything to your cart yet. Explore our fresh grocery aisles and find great deals!
+      </p>
+      <a
+        routerLink="/products"
+        class="mt-6 inline-flex items-center gap-2 bg-[#0aad0a] hover:bg-[#088a08] text-white font-semibold py-3.5 px-8 rounded-xl text-sm shadow-md shadow-[#0aad0a]/20 transition-all hover:scale-105 active:scale-95 cursor-pointer"
+      >
+        <i class="fa-solid fa-basket-shopping"></i>
+        <span>Continue Shopping</span>
+      </a>
+    </div>
+  } @else {
+    <!-- Populated Cart Two-Column Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Products Table / List (8 Cols) -->
+      <div class="lg:col-span-8 space-y-4">
+        @for (item of products(); track item._id) {
+          <div
+            class="relative flex flex-col sm:flex-row items-center gap-4 sm:gap-6 bg-white rounded-2xl border border-gray-100 p-4 sm:p-5 hover:border-gray-200 transition-all shadow-xs"
+            [class.opacity-60]="isItemUpdating(item.product._id)"
+          >
+            <!-- In-Flight Item Overlay Spinner -->
+            @if (isItemUpdating(item.product._id)) {
+              <div class="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-10 rounded-2xl flex items-center justify-center pointer-events-none">
+                <div class="flex items-center gap-2 bg-white px-3.5 py-1.5 rounded-full shadow-md border border-gray-100">
+                  <i class="fa-solid fa-spinner fa-spin text-xs text-[#0aad0a]"></i>
+                  <span class="text-xs font-semibold text-gray-700">Updating...</span>
+                </div>
+              </div>
+            }
+
+            <!-- Product Thumbnail (aspect-square object-contain) -->
+            <a
+              [routerLink]="['/products', item.product._id]"
+              class="w-24 h-24 sm:w-28 sm:h-28 aspect-square rounded-xl overflow-hidden bg-gray-50 shrink-0 p-2 border border-gray-100 flex items-center justify-center group"
+            >
+              <img
+                [src]="item.product.imageCover"
+                [alt]="item.product.title"
+                class="w-full h-full aspect-square object-contain transition-transform duration-300 group-hover:scale-105"
+                loading="lazy"
+              />
+            </a>
+
+            <!-- Product Category, Title & Unit Price -->
+            <div class="flex-1 text-center sm:text-left space-y-1 min-w-0">
+              <span class="text-xs font-semibold text-[#0aad0a] uppercase tracking-wider block">
+                {{ item.product.category.name }}
+              </span>
+              <h3 class="text-sm sm:text-base font-bold text-gray-900 line-clamp-2 hover:text-[#0aad0a] transition-colors">
+                <a [routerLink]="['/products', item.product._id]">
+                  {{ item.product.title }}
+                </a>
+              </h3>
+              <p class="text-sm font-bold text-gray-900 pt-1">
+                {{ item.price }} <span class="text-xs font-normal text-gray-500">EGP</span>
+              </p>
+            </div>
+
+            <!-- Stepper Controls & Remove Action -->
+            <div class="flex sm:flex-col items-center sm:items-end justify-between w-full sm:w-auto gap-3 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+              
+              <!-- Interactive Quantity Stepper: - count + -->
+              <div class="flex items-center border border-gray-200 rounded-xl bg-gray-50/60 p-1 shadow-2xs">
+                <button
+                  type="button"
+                  (click)="decrementQuantity(item.product._id, item.count)"
+                  [disabled]="isItemUpdating(item.product._id)"
+                  class="w-8 h-8 rounded-lg bg-white hover:bg-gray-100 text-gray-700 flex items-center justify-center transition-colors shadow-2xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                  aria-label="Decrease quantity"
+                >
+                  @if (item.count <= 1) {
+                    <i class="fa-regular fa-trash-can text-xs text-red-500"></i>
+                  } @else {
+                    <i class="fa-solid fa-minus text-xs"></i>
+                  }
+                </button>
+                <span class="w-10 text-center font-bold text-gray-900 text-sm select-none">
+                  {{ item.count }}
+                </span>
+                <button
+                  type="button"
+                  (click)="incrementQuantity(item.product._id, item.count)"
+                  [disabled]="isItemUpdating(item.product._id)"
+                  class="w-8 h-8 rounded-lg bg-white hover:bg-gray-100 text-gray-700 flex items-center justify-center transition-colors shadow-2xs cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                  aria-label="Increase quantity"
+                >
+                  <i class="fa-solid fa-plus text-xs"></i>
+                </button>
+              </div>
+
+              <!-- Remove Action Button (trash icon, text-red-500 hover:text-red-600) -->
+              <button
+                type="button"
+                (click)="removeItem(item.product._id)"
+                [disabled]="isItemUpdating(item.product._id)"
+                class="text-xs sm:text-sm text-red-500 hover:text-red-600 font-semibold inline-flex items-center gap-1.5 cursor-pointer transition-colors p-1 disabled:opacity-40 disabled:cursor-not-allowed"
+                aria-label="Remove item"
+              >
+                <i class="fa-regular fa-trash-can text-sm"></i>
+                <span>Remove</span>
+              </button>
+
+            </div>
+
+          </div>
+        } @empty {
+          <div class="text-center py-12 bg-gray-50 rounded-2xl border border-gray-100">
+            <p class="text-sm text-gray-500">No items available in your cart.</p>
+          </div>
+        }
+
+        <!-- Back to Shopping Link -->
+        <div class="pt-4 flex items-center justify-between">
+          <a
+            routerLink="/products"
+            class="text-xs sm:text-sm font-semibold text-[#0aad0a] hover:text-[#088a08] inline-flex items-center gap-2 transition-colors"
+          >
+            <i class="fa-solid fa-arrow-left text-xs"></i>
+            <span>Continue Shopping</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Order Summary Sticky Card (4 Cols) -->
+      <div class="lg:col-span-4 bg-gray-50/80 rounded-3xl p-6 sm:p-8 border border-gray-100 space-y-6 sticky top-24 shadow-xs">
+        <h2 class="text-lg font-bold text-gray-900 pb-3 border-b border-gray-200 flex items-center gap-2">
+          <i class="fa-solid fa-receipt text-[#0aad0a]"></i>
+          <span>Order Summary</span>
+        </h2>
+
+        <div class="space-y-3 text-sm text-gray-600">
+          <div class="flex items-center justify-between">
+            <span>Total Items</span>
+            <span class="font-bold text-gray-900">{{ numOfCartItems() }}</span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span>Subtotal</span>
+            <span class="font-bold text-gray-900">{{ totalCartPrice() }} EGP</span>
+          </div>
+
+          <div class="flex items-center justify-between">
+            <span>Shipping</span>
+            <span class="font-semibold text-emerald-600">Free</span>
+          </div>
+
+          <div class="pt-3 border-t border-gray-200 flex items-center justify-between text-base">
+            <span class="font-bold text-gray-900">Total Price</span>
+            <span class="text-2xl font-bold text-[#0aad0a]">
+              {{ totalCartPrice() }} <span class="text-xs text-gray-500 font-normal">EGP</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Proceed to Checkout Primary Button navigating to /checkout/:cartId -->
+        <a
+          [routerLink]="cartId() ? ['/checkout', cartId()] : ['/checkout']"
+          class="w-full bg-[#0aad0a] hover:bg-[#088a08] text-white font-semibold py-3.5 px-6 rounded-2xl shadow-lg shadow-[#0aad0a]/25 transition-all flex items-center justify-center gap-2 cursor-pointer hover:shadow-[#0aad0a]/35 hover:-translate-y-0.5 active:translate-y-0 text-center"
+        >
+          <span>Proceed to Checkout</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+
+        <!-- Security & Trust Badges -->
+        <div class="space-y-2 pt-2 text-xs text-gray-500">
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-shield-halved text-[#0aad0a]"></i>
+            <span>Encrypted SSL 256-bit Secure Checkout</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <i class="fa-solid fa-truck text-[#0aad0a]"></i>
+            <span>Instant delivery in Cairo &amp; Giza</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  }
+
+</div>

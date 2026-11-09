@@ -1,0 +1,324 @@
+<!-- ========================================================================= -->
+<!-- FRESHCART GLOBAL NAVBAR                                                   -->
+<!-- Background: bg-[#f0f3f2] (Surface Light Gray-Green)                       -->
+<!-- ========================================================================= -->
+
+<!-- 1. Top Announcement Bar (Desktop: hidden lg:block) -->
+<div class="hidden lg:block border-b border-gray-200/70 bg-[#f0f3f2] text-xs text-gray-600">
+  <div class="container mx-auto px-4 h-9 flex items-center justify-between">
+    <!-- Left Shipping & Deals Notice -->
+    <div class="flex items-center gap-5">
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-truck text-primary-600"></i>
+        <span>Free Shipping on Orders Over 500 EGP</span>
+      </div>
+      <div class="text-gray-300">|</div>
+      <div class="flex items-center gap-2">
+        <i class="fa-solid fa-gift text-primary-600"></i>
+        <span>New Arrivals Daily &amp; Special Deals</span>
+      </div>
+    </div>
+
+    <!-- Right Contact & Quick Auth -->
+    <div class="flex items-center gap-5">
+      <a href="tel:+18001234567" class="flex items-center gap-1.5 hover:text-primary-600 transition-colors">
+        <i class="fa-solid fa-phone text-primary-600"></i>
+        <span>+1 (800) 123-4567</span>
+      </a>
+      <div class="w-px h-3.5 bg-gray-300"></div>
+
+      @if (auth.isLoggedIn()) {
+        <div class="flex items-center gap-3">
+          <span class="text-gray-800 font-medium flex items-center gap-1.5">
+            <i class="fa-solid fa-circle-user text-primary-600"></i>
+            {{ auth.currentUser()?.name }}
+          </span>
+          <span class="text-gray-300">|</span>
+          <a routerLink="/allorders" class="hover:text-primary-600 transition-colors font-medium">
+            My Orders
+          </a>
+          <span class="text-gray-300">|</span>
+          <button (click)="logout()" class="text-red-600 hover:text-red-700 font-medium cursor-pointer transition-colors">
+            Sign Out
+          </button>
+        </div>
+      } @else {
+        <div class="flex items-center gap-3">
+          <a routerLink="/login" class="flex items-center gap-1.5 hover:text-primary-600 transition-colors font-medium">
+            <i class="fa-regular fa-user text-primary-600"></i>
+            <span>Sign In</span>
+          </a>
+          <span class="text-gray-300">/</span>
+          <a routerLink="/register" class="flex items-center gap-1.5 hover:text-primary-600 transition-colors font-medium">
+            <i class="fa-solid fa-user-plus text-primary-600"></i>
+            <span>Sign Up</span>
+          </a>
+        </div>
+      }
+    </div>
+  </div>
+</div>
+
+<!-- 2. Sticky Navbar Header -->
+<header class="sticky top-0 z-40 bg-[#f0f3f2] border-b border-gray-200/80 shadow-xs">
+  <div class="container mx-auto px-4 h-16 lg:h-[72px] flex items-center justify-between gap-4 lg:gap-6">
+    
+    <!-- Brand Logo -->
+    <a routerLink="/" class="flex items-center gap-2.5 shrink-0 group">
+      <div class="w-10 h-10 rounded-xl bg-primary-600 text-white flex items-center justify-center text-lg shadow-xs group-hover:bg-primary-700 transition-colors">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <span class="text-2xl font-extrabold tracking-tight text-gray-900">Fresh<span class="text-primary-600">Cart</span></span>
+    </a>
+
+    <!-- Desktop Navigation Links (hidden xl:flex) -->
+    <nav class="hidden xl:flex items-center gap-5 text-sm font-medium text-gray-700">
+      <a routerLink="/home" routerLinkActive="text-primary-600 font-bold" class="hover:text-primary-600 transition-colors">Home</a>
+      <a routerLink="/cart" routerLinkActive="text-primary-600 font-bold" class="hover:text-primary-600 transition-colors">Cart</a>
+      <a routerLink="/wishlist" routerLinkActive="text-primary-600 font-bold" class="hover:text-primary-600 transition-colors">Wishlist</a>
+      <a routerLink="/products" routerLinkActive="text-primary-600 font-bold" class="hover:text-primary-600 transition-colors">Products</a>
+      <a routerLink="/categories" routerLinkActive="text-primary-600 font-bold" class="hover:text-primary-600 transition-colors">Categories</a>
+      <a routerLink="/brands" routerLinkActive="text-primary-600 font-bold" class="hover:text-primary-600 transition-colors">Brands</a>
+      @if (auth.isLoggedIn()) {
+        <a routerLink="/allorders" routerLinkActive="text-primary-600 font-bold" class="hover:text-primary-600 transition-colors">Orders</a>
+      }
+    </nav>
+
+    <!-- Live Search Pill Input (Desktop: hidden lg:flex) -->
+    <div class="hidden lg:flex flex-1 max-w-md relative">
+      <input
+        #desktopSearchInput
+        type="text"
+        (keydown.enter)="onSearch($event, desktopSearchInput.value)"
+        placeholder="Search for products, brands..."
+        class="w-full px-4 py-2 pr-10 rounded-full border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 text-sm text-gray-800 placeholder-gray-400 transition-all shadow-2xs"
+      />
+      <button
+        type="button"
+        (click)="onSearch($event, desktopSearchInput.value)"
+        aria-label="Search"
+        class="absolute right-1 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-primary-600 hover:bg-primary-700 text-white flex items-center justify-center shadow-xs transition-colors cursor-pointer"
+      >
+        <i class="fa-solid fa-magnifying-glass text-xs"></i>
+      </button>
+    </div>
+
+    <!-- Right Side: Social Media Icons + Dynamic Badges + Auth Buttons -->
+    <div class="flex items-center gap-3 lg:gap-4 shrink-0">
+      
+      <!-- Social Media Icons (hidden md:flex) -->
+      <div class="hidden md:flex items-center gap-2.5 text-gray-600 pr-1">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="hover:text-primary-600 transition-colors">
+          <i class="fa-brands fa-instagram text-base"></i>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="hover:text-primary-600 transition-colors">
+          <i class="fa-brands fa-facebook text-base"></i>
+        </a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="hover:text-primary-600 transition-colors">
+          <i class="fa-brands fa-tiktok text-base"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="hover:text-primary-600 transition-colors">
+          <i class="fa-brands fa-x-twitter text-base"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="hover:text-primary-600 transition-colors">
+          <i class="fa-brands fa-linkedin text-base"></i>
+        </a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="hover:text-primary-600 transition-colors">
+          <i class="fa-brands fa-youtube text-base"></i>
+        </a>
+      </div>
+
+      <div class="hidden md:block w-px h-5 bg-gray-300"></div>
+
+      <!-- Wishlist Action & Badge -->
+      <a routerLink="/wishlist" class="relative p-2 rounded-full hover:bg-gray-200/60 text-gray-700 hover:text-red-500 transition-colors group" aria-label="Wishlist">
+        <i class="fa-regular fa-heart text-xl group-hover:scale-110 transition-transform"></i>
+        @if (wishlistCount() > 0) {
+          <span class="absolute top-0.5 right-0.5 bg-red-500 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-in zoom-in">
+            {{ wishlistCount() }}
+          </span>
+        }
+      </a>
+
+      <!-- Cart Action & Badge -->
+      <a routerLink="/cart" class="relative p-2 rounded-full hover:bg-gray-200/60 text-gray-700 hover:text-primary-600 transition-colors group" aria-label="Cart">
+        <i class="fa-solid fa-cart-shopping text-xl group-hover:scale-110 transition-transform"></i>
+        @if (cartCount() > 0) {
+          <span class="absolute top-0.5 right-0.5 bg-primary-600 text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center shadow-xs animate-in zoom-in">
+            {{ cartCount() }}
+          </span>
+        }
+      </a>
+
+      <!-- Desktop Auth Button -->
+      @if (auth.isLoggedIn()) {
+        <button
+          (click)="logout()"
+          class="hidden lg:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-gray-300 hover:bg-red-50 hover:text-red-600 text-gray-700 text-xs font-semibold transition-all cursor-pointer"
+        >
+          <i class="fa-solid fa-arrow-right-from-bracket text-xs"></i>
+          <span>Sign Out</span>
+        </button>
+      } @else {
+        <a
+          routerLink="/login"
+          class="hidden lg:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary-600 hover:bg-primary-700 text-white text-xs font-semibold shadow-xs transition-all active:scale-95"
+        >
+          <i class="fa-regular fa-user text-xs"></i>
+          <span>Sign In</span>
+        </a>
+      }
+
+      <!-- Mobile Hamburger Toggle -->
+      <label for="mobile-drawer-toggle" class="xl:hidden w-9 h-9 rounded-full bg-primary-600 hover:bg-primary-700 text-white flex items-center justify-center cursor-pointer shadow-xs transition-colors" aria-label="Toggle Mobile Menu">
+        <i class="fa-solid fa-bars text-sm"></i>
+      </label>
+    </div>
+
+  </div>
+</header>
+
+<!-- 3. Mobile Responsive Drawer -->
+<input type="checkbox" id="mobile-drawer-toggle" class="peer/drawer sr-only" />
+
+<label for="mobile-drawer-toggle" class="fixed inset-0 bg-black/50 z-50 xl:hidden opacity-0 pointer-events-none peer-checked/drawer:opacity-100 peer-checked/drawer:pointer-events-auto transition-opacity duration-300" aria-label="Close Mobile Menu"></label>
+
+<aside class="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-2xl transition-transform duration-300 ease-in-out translate-x-full peer-checked/drawer:translate-x-0 z-50 xl:hidden flex flex-col">
+  
+  <!-- Drawer Header -->
+  <div class="p-4 border-b border-gray-100 bg-[#f0f3f2] flex items-center justify-between">
+    <a routerLink="/" class="flex items-center gap-2">
+      <div class="w-8 h-8 rounded-lg bg-primary-600 text-white flex items-center justify-center text-sm shadow-xs">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <span class="text-xl font-bold tracking-tight text-gray-900">Fresh<span class="text-primary-600">Cart</span></span>
+    </a>
+    <label for="mobile-drawer-toggle" class="w-8 h-8 rounded-full bg-white hover:bg-gray-100 text-gray-600 flex items-center justify-center cursor-pointer transition-colors" aria-label="Close Menu">
+      <i class="fa-solid fa-xmark text-base"></i>
+    </label>
+  </div>
+
+  <!-- Mobile Search Input -->
+  <div class="p-4 border-b border-gray-100">
+    <div class="relative">
+      <input
+        #mobileSearchInput
+        type="text"
+        (keydown.enter)="onSearch($event, mobileSearchInput.value)"
+        placeholder="Search products..."
+        class="w-full px-4 py-2 pr-10 rounded-xl border border-gray-300 bg-gray-50 text-sm placeholder-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all"
+      />
+      <button
+        type="button"
+        (click)="onSearch($event, mobileSearchInput.value)"
+        aria-label="Search"
+        class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary-600"
+      >
+        <i class="fa-solid fa-magnifying-glass text-sm"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Nav Items -->
+  <div class="p-4 space-y-1 overflow-y-auto flex-1">
+    <a routerLink="/home" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+      <i class="fa-solid fa-house text-sm w-5 text-gray-400"></i>
+      <span>Home</span>
+    </a>
+    <a routerLink="/cart" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-cart-shopping text-sm w-5 text-primary-600"></i>
+        <span>Shopping Cart</span>
+      </div>
+      @if (cartCount() > 0) {
+        <span class="bg-primary-600 text-white font-bold text-xs px-2 py-0.5 rounded-full">
+          {{ cartCount() }}
+        </span>
+      }
+    </a>
+    <a routerLink="/wishlist" class="flex items-center justify-between px-3.5 py-2.5 rounded-xl font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+      <div class="flex items-center gap-3">
+        <i class="fa-solid fa-heart text-sm w-5 text-red-500"></i>
+        <span>Wishlist</span>
+      </div>
+      @if (wishlistCount() > 0) {
+        <span class="bg-red-500 text-white font-bold text-xs px-2 py-0.5 rounded-full">
+          {{ wishlistCount() }}
+        </span>
+      }
+    </a>
+    <a routerLink="/products" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+      <i class="fa-solid fa-bag-shopping text-sm w-5 text-gray-400"></i>
+      <span>Products</span>
+    </a>
+    <a routerLink="/categories" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+      <i class="fa-solid fa-layer-group text-sm w-5 text-gray-400"></i>
+      <span>Categories</span>
+    </a>
+    <a routerLink="/brands" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+      <i class="fa-solid fa-tags text-sm w-5 text-gray-400"></i>
+      <span>Brands</span>
+    </a>
+    
+    @if (auth.isLoggedIn()) {
+      <div class="h-px bg-gray-100 my-2"></div>
+      <a routerLink="/allorders" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl font-medium text-gray-700 hover:text-primary-600 hover:bg-primary-50 transition-colors">
+        <i class="fa-solid fa-clock-rotate-left text-sm w-5 text-gray-400"></i>
+        <span>My Orders</span>
+      </a>
+    }
+
+    <!-- Mobile Drawer Social Media Row -->
+    <div class="pt-4 border-t border-gray-100 mt-4">
+      <span class="text-xs font-semibold text-gray-400 block px-3.5 mb-2 uppercase tracking-wider">Follow Us</span>
+      <div class="flex items-center justify-around text-gray-600 px-3.5 py-2">
+        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary-600">
+          <i class="fa-brands fa-instagram text-lg"></i>
+        </a>
+        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary-600">
+          <i class="fa-brands fa-facebook text-lg"></i>
+        </a>
+        <a href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary-600">
+          <i class="fa-brands fa-tiktok text-lg"></i>
+        </a>
+        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary-600">
+          <i class="fa-brands fa-x-twitter text-lg"></i>
+        </a>
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary-600">
+          <i class="fa-brands fa-linkedin text-lg"></i>
+        </a>
+        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" class="hover:text-primary-600">
+          <i class="fa-brands fa-youtube text-lg"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Drawer Auth CTAs -->
+  <div class="p-4 border-t border-gray-100 bg-gray-50/50">
+    @if (auth.isLoggedIn()) {
+      <div class="space-y-3">
+        <div class="text-xs text-gray-500 flex items-center gap-2">
+          <i class="fa-solid fa-user text-primary-600"></i>
+          <span>Signed in as <strong>{{ auth.currentUser()?.name }}</strong></span>
+        </div>
+        <button
+          (click)="logout()"
+          class="w-full bg-red-600 hover:bg-red-700 text-white py-2.5 rounded-xl font-semibold text-sm text-center shadow-xs transition-colors cursor-pointer"
+        >
+          Sign Out
+        </button>
+      </div>
+    } @else {
+      <div class="grid grid-cols-2 gap-3">
+        <a routerLink="/login" class="bg-primary-600 hover:bg-primary-700 text-white py-2 rounded-xl font-semibold text-sm text-center shadow-xs transition-colors">
+          Sign In
+        </a>
+        <a routerLink="/register" class="border border-primary-600 text-primary-600 hover:bg-primary-50 py-2 rounded-xl font-semibold text-sm text-center transition-colors">
+          Sign Up
+        </a>
+      </div>
+    }
+  </div>
+
+</aside>

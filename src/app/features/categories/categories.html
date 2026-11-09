@@ -1,0 +1,118 @@
+<div class="space-y-8 pb-16">
+
+  <!-- Header Banner -->
+  <div class="bg-gradient-to-r from-primary-50 via-green-50 to-emerald-50 rounded-3xl p-8 border border-green-100 shadow-xs">
+    <span class="text-xs font-bold uppercase tracking-wider text-[#0aad0a] bg-primary-100 px-3 py-1 rounded-full">Explore Catalog</span>
+    <h1 class="text-3xl font-extrabold text-gray-900 tracking-tight mt-2">All Grocery Categories</h1>
+    <p class="text-sm text-gray-600 mt-1">Browse all available grocery departments and subcategories.</p>
+  </div>
+
+  <!-- Categories Grid -->
+  @if (isLoading()) {
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+        <div class="rounded-2xl border border-gray-100 bg-white p-4 space-y-3 animate-pulse">
+          <div class="aspect-square bg-gray-100 rounded-xl"></div>
+          <div class="h-4 bg-gray-100 rounded w-2/3 mx-auto"></div>
+        </div>
+      }
+    </div>
+  } @else {
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
+      @for (category of categories(); track category._id) {
+        <div
+          (click)="selectCategory(category)"
+          [class.border-[#0aad0a]]="selectedCategory()?._id === category._id"
+          [class.ring-2]="selectedCategory()?._id === category._id"
+          [class.ring-[#0aad0a]/20]="selectedCategory()?._id === category._id"
+          class="group bg-white rounded-2xl border border-gray-100 p-4 hover:border-[#0aad0a] hover:shadow-xl transition-all duration-300 cursor-pointer flex flex-col items-center text-center"
+        >
+          <div class="aspect-square w-full rounded-xl overflow-hidden bg-gray-50 mb-4 p-2 flex items-center justify-center">
+            <img
+              [src]="category.image"
+              [alt]="category.name"
+              class="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
+            />
+          </div>
+
+          <h3 class="text-sm sm:text-base font-bold text-gray-800 group-hover:text-[#0aad0a] transition-colors">
+            {{ category.name }}
+          </h3>
+          <span class="text-xs text-[#0aad0a] font-medium mt-1">View subcategories →</span>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Subcategories Modal Dialog -->
+  @if (selectedCategory()) {
+    <div
+      (click)="closeSubCategories()"
+      class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs animate-in fade-in duration-200"
+    >
+      <div
+        (click)="$event.stopPropagation()"
+        class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-gray-100 relative space-y-6"
+      >
+        
+        <div class="flex items-center justify-between border-b border-gray-100 pb-4">
+          <div class="flex items-center gap-3">
+            <img
+              [src]="selectedCategory()?.image"
+              [alt]="selectedCategory()?.name"
+              class="w-12 h-12 rounded-xl object-cover border border-gray-200"
+            />
+            <div>
+              <h2 class="text-lg font-bold text-gray-900">{{ selectedCategory()?.name }}</h2>
+              <p class="text-xs text-gray-500">Subcategories</p>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            (click)="closeSubCategories()"
+            class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 flex items-center justify-center cursor-pointer transition-colors"
+            aria-label="Close modal"
+          >
+            <i class="fa-solid fa-xmark text-sm"></i>
+          </button>
+        </div>
+
+        @if (isLoadingSubs()) {
+          <div class="py-12 flex items-center justify-center gap-2 text-[#0aad0a]">
+            <i class="fa-solid fa-spinner fa-spin text-xl"></i>
+            <span class="text-sm font-semibold">Loading subcategories...</span>
+          </div>
+        } @else if (subCategories().length === 0) {
+          <div class="py-8 text-center text-gray-500 text-sm">
+            <i class="fa-solid fa-layer-group text-3xl text-gray-300 mb-2"></i>
+            <p>No subcategories found for this category.</p>
+          </div>
+        } @else {
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+            @for (sub of subCategories(); track sub._id) {
+              <a
+                [routerLink]="['/products']"
+                (click)="closeSubCategories()"
+                class="p-3 rounded-xl border border-gray-200 hover:border-[#0aad0a] hover:bg-primary-50/50 text-gray-800 hover:text-[#0aad0a] text-xs font-semibold text-center transition-all cursor-pointer shadow-2xs"
+              >
+                {{ sub.name }}
+              </a>
+            }
+          </div>
+        }
+
+        <div class="pt-2">
+          <a
+            [routerLink]="['/products']"
+            (click)="closeSubCategories()"
+            class="w-full block text-center bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3 rounded-xl text-sm transition-colors cursor-pointer"
+          >
+            Browse Products in this Category
+          </a>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

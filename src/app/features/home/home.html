@@ -1,0 +1,418 @@
+<div class="space-y-10 lg:space-y-14 pb-16">
+
+  <!-- ======================================================================= -->
+  <!-- 1. HERO BANNER SLIDER & PROMO GRID                                      -->
+  <!-- ======================================================================= -->
+  <section class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+    <!-- Main Carousel Banner (Col 1-2) -->
+    <div class="lg:col-span-2 relative rounded-3xl overflow-hidden shadow-lg bg-emerald-700 min-h-[360px] md:min-h-[420px] flex items-center group">
+      @for (slide of slides; track $index) {
+        @if (currentSlide() === $index) {
+          <div class="absolute inset-0 transition-opacity duration-700">
+            <img
+              [src]="slide.image"
+              [alt]="slide.title"
+              class="w-full h-full object-cover object-center"
+            />
+            <div class="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-transparent"></div>
+          </div>
+
+          <div class="relative z-10 px-8 sm:px-12 py-10 max-w-xl text-white">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-primary-600/90 text-white text-xs font-bold uppercase tracking-wider mb-4 shadow-sm backdrop-blur-xs">
+              <i class="fa-solid fa-bolt text-yellow-300"></i>
+              <span>{{ slide.badge }}</span>
+            </div>
+            <h1 class="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4 leading-tight">
+              {{ slide.title }}
+            </h1>
+            <p class="text-gray-200 text-sm sm:text-base mb-6 line-clamp-2 leading-relaxed">
+              {{ slide.description }}
+            </p>
+            <div class="flex items-center gap-3">
+              <a
+                routerLink="/products"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-primary-600 hover:bg-primary-700 text-white font-semibold text-sm shadow-md transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                <span>Shop Now</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </a>
+              <a
+                routerLink="/products"
+                class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/20 hover:bg-white/30 backdrop-blur-xs border border-white/40 text-white font-semibold text-sm transition-all hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                <span>View Deals</span>
+              </a>
+            </div>
+          </div>
+        }
+      }
+
+      <!-- Slider Arrows -->
+      <button
+        (click)="prevSlide()"
+        aria-label="Previous slide"
+        class="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/30 hover:bg-white/70 backdrop-blur-sm text-white hover:text-gray-900 flex items-center justify-center transition-all cursor-pointer shadow-md opacity-0 group-hover:opacity-100"
+      >
+        <i class="fa-solid fa-chevron-left"></i>
+      </button>
+      <button
+        (click)="nextSlide()"
+        aria-label="Next slide"
+        class="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/30 hover:bg-white/70 backdrop-blur-sm text-white hover:text-gray-900 flex items-center justify-center transition-all cursor-pointer shadow-md opacity-0 group-hover:opacity-100"
+      >
+        <i class="fa-solid fa-chevron-right"></i>
+      </button>
+
+      <!-- Slider Dots -->
+      <div class="absolute bottom-4 left-8 flex items-center gap-2 z-10">
+        @for (slide of slides; track $index) {
+          <button
+            (click)="currentSlide.set($index)"
+            [class.w-8]="currentSlide() === $index"
+            [class.bg-primary-500]="currentSlide() === $index"
+            [class.w-2.5]="currentSlide() !== $index"
+            [class.bg-white/50]="currentSlide() !== $index"
+            class="h-2.5 rounded-full transition-all duration-300 cursor-pointer"
+            aria-label="Slide dot"
+          ></button>
+        }
+      </div>
+    </div>
+
+    <!-- Side Promo Banners (Col 3) -->
+    <div class="hidden lg:flex flex-col gap-6">
+      <div class="relative flex-1 rounded-3xl overflow-hidden shadow-md group">
+        <img
+          src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80"
+          alt="Fresh Salad Deal"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 text-white">
+          <span class="text-xs uppercase font-bold tracking-wider text-primary-300">Organic Picks</span>
+          <h3 class="text-xl font-bold mt-1">Farm Fresh Greens</h3>
+          <p class="text-xs text-gray-300 mt-1">Up to 30% off selected seasonal greens</p>
+        </div>
+      </div>
+
+      <div class="relative flex-1 rounded-3xl overflow-hidden shadow-md group">
+        <img
+          src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80"
+          alt="Fresh Bakery"
+          class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+        />
+        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6 text-white">
+          <span class="text-xs uppercase font-bold tracking-wider text-amber-300">Daily Bakery</span>
+          <h3 class="text-xl font-bold mt-1">Artisan Breads &amp; Pastries</h3>
+          <p class="text-xs text-gray-300 mt-1">Baked fresh every morning at 6 AM</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- 2. 4-FEATURE VALUE PROPOSITION BAR (Matching Demo)                      -->
+  <!-- ======================================================================= -->
+  <section class="py-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div class="bg-blue-50 text-blue-600 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-truck text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-sm">Free Shipping</h3>
+          <p class="text-xs text-gray-500">On orders over 500 EGP</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div class="bg-emerald-50 text-emerald-600 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-shield-halved text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-sm">Secure Payment</h3>
+          <p class="text-xs text-gray-500">100% secure transactions</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div class="bg-amber-50 text-amber-600 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-arrow-rotate-left text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-sm">Easy Returns</h3>
+          <p class="text-xs text-gray-500">14-day return policy</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+        <div class="bg-purple-50 text-purple-600 w-12 h-12 rounded-xl flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-headset text-xl"></i>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-800 text-sm">24/7 Support</h3>
+          <p class="text-xs text-gray-500">Dedicated support team</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- 3. POPULAR CATEGORIES CAROUSEL                                          -->
+  <!-- ======================================================================= -->
+  <section class="space-y-4">
+    <div class="flex items-center justify-between flex-wrap gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-8 w-1.5 bg-gradient-to-b from-emerald-500 to-emerald-700 rounded-full"></div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Shop By <span class="text-emerald-600">Category</span></h2>
+          <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Explore our most popular fresh grocery departments</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <a routerLink="/categories" class="text-primary-600 hover:text-primary-700 font-semibold text-sm flex items-center gap-1 transition-colors">
+          <span>View All Categories</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+        <div class="flex items-center gap-2">
+          <button
+            (click)="scrollCategories('left')"
+            aria-label="Scroll left"
+            class="w-9 h-9 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-2xs cursor-pointer"
+          >
+            <i class="fa-solid fa-chevron-left text-xs"></i>
+          </button>
+          <button
+            (click)="scrollCategories('right')"
+            aria-label="Scroll right"
+            class="w-9 h-9 rounded-full border border-gray-200 bg-white hover:bg-gray-50 text-gray-700 flex items-center justify-center transition-colors shadow-2xs cursor-pointer"
+          >
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category Cards Scroll Area -->
+    <div
+      id="categories-slider"
+      class="flex items-center gap-4 overflow-x-auto pb-4 pt-1 no-scrollbar scroll-smooth"
+      style="scrollbar-width: none;"
+    >
+      @for (category of categories(); track category._id) {
+        <a
+          [routerLink]="['/categories']"
+          class="flex flex-col items-center shrink-0 w-32 sm:w-36 group cursor-pointer"
+        >
+          <div class="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-gray-100 bg-gray-50 shadow-2xs group-hover:border-primary-400 group-hover:shadow-md transition-all duration-300 p-2">
+            <img
+              [src]="category.image"
+              [alt]="category.name"
+              class="w-full h-full object-cover rounded-xl group-hover:scale-110 transition-transform duration-300"
+            />
+          </div>
+          <span class="text-xs sm:text-sm font-semibold text-gray-800 mt-2.5 text-center group-hover:text-primary-600 transition-colors line-clamp-1">
+            {{ category.name }}
+          </span>
+        </a>
+      }
+    </div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- 4. DUAL PROMOTIONAL MARKETING BANNERS (Matching Demo)                    -->
+  <!-- ======================================================================= -->
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Banner 1: Fresh Organic Fruits -->
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 to-emerald-800 p-8 text-white shadow-lg flex flex-col justify-between min-h-[220px]">
+      <div class="absolute -right-8 -bottom-8 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-xs px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+          <span>🔥</span>
+          <span>Deal of the Day</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold mb-1">Fresh Organic Fruits</h3>
+        <p class="text-emerald-100 text-xs sm:text-sm mb-4">Get up to 40% off on selected organic fruits</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="text-2xl sm:text-3xl font-black text-white">40% OFF</span>
+          <span class="text-xs text-emerald-200">Use code: <strong class="text-white underline">ORGANIC40</strong></span>
+        </div>
+      </div>
+      <div class="relative z-10">
+        <a routerLink="/products" class="inline-flex items-center gap-2 bg-white text-emerald-700 hover:bg-emerald-50 px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 cursor-pointer">
+          <span>Shop Now</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Banner 2: Exotic Vegetables -->
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-teal-700 to-emerald-950 p-8 text-white shadow-lg flex flex-col justify-between min-h-[220px]">
+      <div class="absolute -right-8 -bottom-8 w-48 h-48 bg-teal-400/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="relative z-10">
+        <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-xs px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-3">
+          <span>🌱</span>
+          <span>Seasonal Freshness</span>
+        </div>
+        <h3 class="text-2xl sm:text-3xl font-extrabold mb-1">Exotic Vegetables</h3>
+        <p class="text-teal-100 text-xs sm:text-sm mb-4">Farm-picked crisp exotic produce harvested daily</p>
+        <div class="flex items-center gap-3 mb-5">
+          <span class="text-2xl sm:text-3xl font-black text-white">25% OFF</span>
+          <span class="text-xs text-teal-200">Use code: <strong class="text-white underline">VEGGIE25</strong></span>
+        </div>
+      </div>
+      <div class="relative z-10">
+        <a routerLink="/products" class="inline-flex items-center gap-2 bg-white text-teal-800 hover:bg-teal-50 px-5 py-2.5 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all hover:scale-105 cursor-pointer">
+          <span>Shop Now</span>
+          <i class="fa-solid fa-arrow-right text-xs"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- 5. FEATURED PRODUCTS GRID                                               -->
+  <!-- ======================================================================= -->
+  <section class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="h-8 w-1.5 bg-gradient-to-b from-emerald-500 to-emerald-700 rounded-full"></div>
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Featured <span class="text-emerald-600">Products</span></h2>
+          <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Top-selling items loved by our customers</p>
+        </div>
+      </div>
+
+      <!-- Real-Time Search Filter Bar -->
+      <div class="relative max-w-xs w-full">
+        <input
+          type="text"
+          [value]="searchTerm()"
+          (input)="searchTerm.set($any($event.target).value)"
+          placeholder="Filter products by title..."
+          class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full text-xs sm:text-sm bg-gray-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all shadow-2xs"
+        />
+        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    @if (isLoading()) {
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+        @for (i of [1,2,3,4,5,6,7,8,9,10]; track i) {
+          <div class="rounded-2xl border border-gray-100 bg-white p-4 space-y-3 animate-pulse">
+            <div class="w-full aspect-square bg-gray-100 rounded-xl"></div>
+            <div class="h-3 bg-gray-100 rounded w-1/2"></div>
+            <div class="h-4 bg-gray-100 rounded w-3/4"></div>
+            <div class="h-4 bg-gray-100 rounded w-1/3"></div>
+            <div class="h-9 bg-gray-100 rounded-xl w-full"></div>
+          </div>
+        }
+      </div>
+    } @else {
+      @if (filteredProducts().length === 0) {
+        <div class="text-center py-16 bg-gray-50/50 rounded-3xl border border-dashed border-gray-200">
+          <i class="fa-solid fa-box-open text-4xl text-gray-300 mb-3"></i>
+          <h3 class="text-base font-bold text-gray-700">No products found</h3>
+          <p class="text-xs text-gray-400 mt-1">Try searching with a different keyword</p>
+          <button
+            (click)="resetSearch()"
+            class="mt-3 px-4 py-2 bg-primary-600 text-white rounded-xl text-xs font-semibold hover:bg-primary-700 transition-colors cursor-pointer"
+          >
+            Reset Search
+          </button>
+        </div>
+      } @else {
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-6">
+          @for (product of filteredProducts(); track product._id) {
+            <app-product-card [product]="product" />
+          }
+        </div>
+      }
+    }
+  </section>
+
+  <!-- ======================================================================= -->
+  <!-- 6. NEWSLETTER & MOBILE APP SECTION (Matching Demo)                      -->
+  <!-- ======================================================================= -->
+  <section class="py-6">
+    <div class="relative bg-gradient-to-br from-emerald-50 via-white to-teal-50 rounded-[2.5rem] border border-emerald-100 p-8 sm:p-12 shadow-xl shadow-emerald-500/5 overflow-hidden">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <!-- Left: Newsletter Info & Form -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wider">
+            <i class="fa-solid fa-envelope text-xs"></i>
+            <span>Newsletter (50,000+ Subscribers)</span>
+          </div>
+          <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
+            Get the Freshest Updates <span class="text-emerald-600">Delivered Free</span>
+          </h2>
+          <p class="text-gray-600 text-sm sm:text-base leading-relaxed">
+            Weekly fresh recipes, seasonal farm produce deals &amp; exclusive member coupons straight to your inbox.
+          </p>
+
+          <div class="flex flex-wrap gap-2.5 pt-1">
+            <div class="inline-flex items-center gap-2 bg-white border border-emerald-100 px-3.5 py-1.5 rounded-full text-xs text-gray-700 shadow-2xs font-medium">
+              <i class="fa-solid fa-leaf text-emerald-600"></i>
+              <span>Fresh Picks Weekly</span>
+            </div>
+            <div class="inline-flex items-center gap-2 bg-white border border-emerald-100 px-3.5 py-1.5 rounded-full text-xs text-gray-700 shadow-2xs font-medium">
+              <i class="fa-solid fa-truck text-emerald-600"></i>
+              <span>Free Delivery Codes</span>
+            </div>
+            <div class="inline-flex items-center gap-2 bg-white border border-emerald-100 px-3.5 py-1.5 rounded-full text-xs text-gray-700 shadow-2xs font-medium">
+              <i class="fa-solid fa-tag text-emerald-600"></i>
+              <span>Members-Only Deals</span>
+            </div>
+          </div>
+
+          <form (submit)="$event.preventDefault()" class="pt-2 flex flex-col sm:flex-row gap-3 max-w-lg">
+            <input
+              type="email"
+              placeholder="you@example.com"
+              class="flex-1 px-4 py-3 rounded-xl border border-gray-300 bg-white text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition shadow-2xs"
+            />
+            <button
+              type="submit"
+              class="bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition-all text-sm cursor-pointer whitespace-nowrap active:scale-95"
+            >
+              Subscribe Free
+            </button>
+          </form>
+        </div>
+
+        <!-- Right: Mobile App Download Card -->
+        <div class="lg:col-span-5 bg-gray-900 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden flex flex-col justify-between min-h-[280px]">
+          <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+          <div>
+            <div class="inline-block bg-emerald-500/20 text-emerald-400 text-xs font-semibold px-3 py-1.5 rounded-full border border-emerald-500/30 uppercase tracking-wider mb-4">
+              📱 MOBILE APP
+            </div>
+            <h3 class="text-2xl font-bold leading-tight mb-2">Shop Faster on Our App</h3>
+            <p class="text-gray-400 text-xs sm:text-sm leading-relaxed mb-6">
+              Get app-exclusive deals, real-time live order tracking, &amp; 15% off your first mobile order.
+            </p>
+          </div>
+
+          <div class="space-y-3 relative z-10">
+            <a href="#" class="flex items-center gap-3 bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-3 rounded-xl transition-all hover:scale-[1.02] cursor-pointer">
+              <i class="fa-brands fa-apple text-2xl text-white"></i>
+              <div>
+                <p class="text-[10px] text-gray-300 uppercase leading-none">Download on the</p>
+                <p class="text-sm font-bold leading-tight">App Store</p>
+              </div>
+            </a>
+            <a href="#" class="flex items-center gap-3 bg-white/10 hover:bg-white/15 border border-white/10 px-4 py-3 rounded-xl transition-all hover:scale-[1.02] cursor-pointer">
+              <i class="fa-brands fa-google-play text-xl text-emerald-400"></i>
+              <div>
+                <p class="text-[10px] text-gray-300 uppercase leading-none">Get it on</p>
+                <p class="text-sm font-bold leading-tight">Google Play</p>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>

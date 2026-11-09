@@ -1,0 +1,267 @@
+<!-- ========================================================================= -->
+<!-- FRESHCART LOGIN PAGE TEMPLATE                                             -->
+<!-- ========================================================================= -->
+
+<div class="min-h-[calc(100vh-140px)] flex items-center justify-center py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gray-50/50">
+  <div class="max-w-6xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+
+    <!-- ===================================================================== -->
+    <!-- 1. LEFT PROMOTIONAL HERO CARD (Desktop only: hidden lg:block)        -->
+    <!-- ===================================================================== -->
+    <div class="hidden lg:block relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary-600 via-primary-700 to-primary-900 p-10 lg:p-12 text-white shadow-2xl min-h-[580px] flex flex-col justify-between">
+      
+      <!-- Background Ambient Glows -->
+      <div class="absolute -right-16 -top-16 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+      <div class="absolute -left-16 -bottom-16 w-64 h-64 bg-primary-400/20 rounded-full blur-3xl pointer-events-none"></div>
+
+      <!-- Top Section: Brand Badge & Welcome Headline -->
+      <div class="relative z-10">
+        <!-- Brand Pill Badge -->
+        <div class="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold uppercase tracking-wider mb-8 shadow-sm">
+          <span class="text-base">🛒</span>
+          <span>FreshCart Express</span>
+        </div>
+
+        <!-- Headline -->
+        <h2 class="text-3xl lg:text-4xl font-extrabold tracking-tight text-white mb-4 leading-tight">
+          Welcome back to FreshCart
+        </h2>
+
+        <!-- Subtitle -->
+        <p class="text-primary-100 text-base leading-relaxed max-w-md">
+          Join thousands of happy customers who trust FreshCart for their daily fresh grocery needs delivered right to their doorstep.
+        </p>
+      </div>
+
+      <!-- Center Section: Decorative Grocery Illustration Card -->
+      <div class="relative z-10 my-8 p-6 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 shadow-inner">
+        <div class="flex items-center gap-4">
+          <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-3xl shadow-md shrink-0">
+            <span>🥗</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="inline-block w-2.5 h-2.5 rounded-full bg-green-400 animate-pulse"></span>
+              <span class="text-xs font-bold uppercase tracking-wider text-green-300">Fast Express Delivery</span>
+            </div>
+            <h3 class="font-bold text-white text-lg">Fresh Groceries in 30 Mins</h3>
+            <p class="text-xs text-primary-100 mt-0.5">Farm-fresh produce, organic dairy & pantry essentials</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Section: Value Proposition Bullets -->
+      <div class="relative z-10 space-y-4 pt-4 border-t border-white/15">
+        <div class="flex items-center gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-white shadow-2xs">
+            <i class="fa-solid fa-truck text-sm"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white text-sm">Free Delivery</h4>
+            <p class="text-xs text-primary-100">Free shipping on all orders over 500 EGP</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-white shadow-2xs">
+            <i class="fa-solid fa-shield-halved text-sm"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white text-sm">Secure Payment</h4>
+            <p class="text-xs text-primary-100">100% encrypted & tamper-proof checkout</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3.5">
+          <div class="w-9 h-9 rounded-xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shrink-0 text-white shadow-2xs">
+            <i class="fa-solid fa-headset text-sm"></i>
+          </div>
+          <div>
+            <h4 class="font-semibold text-white text-sm">24/7 Support</h4>
+            <p class="text-xs text-primary-100">Dedicated customer care assistance anytime</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- 2. RIGHT AUTH CARD                                                    -->
+    <!-- ===================================================================== -->
+    <div class="w-full max-w-md mx-auto">
+      <div class="bg-white rounded-2xl border border-gray-100 shadow-xl p-8 sm:p-10 transition-all">
+        
+        <!-- Heading & Subtitle -->
+        <div class="text-center mb-6">
+          <div class="flex items-center justify-center mb-3">
+            <span class="text-3xl font-extrabold tracking-tight text-primary-600">Fresh<span class="text-gray-900">Cart</span></span>
+          </div>
+          <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
+            Welcome Back!
+          </h1>
+          <p class="mt-1.5 text-sm text-gray-500">
+            Sign in to continue your fresh shopping experience
+          </p>
+        </div>
+
+        <!-- Social Login Buttons Matching Demo -->
+        <div class="space-y-3 mb-6">
+          <button type="button" class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-200 rounded-xl hover:border-primary-300 hover:bg-primary-50/50 transition-all duration-200 cursor-pointer shadow-xs text-sm font-medium text-gray-700">
+            <i class="fa-brands fa-google text-red-500 text-base"></i>
+            <span>Continue with Google</span>
+          </button>
+          <button type="button" class="w-full flex items-center justify-center gap-3 py-3 px-4 border border-gray-200 rounded-xl hover:border-primary-300 hover:bg-primary-50/50 transition-all duration-200 cursor-pointer shadow-xs text-sm font-medium text-gray-700">
+            <i class="fa-brands fa-facebook text-blue-600 text-base"></i>
+            <span>Continue with Facebook</span>
+          </button>
+        </div>
+
+        <!-- Divider with Text -->
+        <div class="relative my-6">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-200"></div>
+          </div>
+          <div class="relative flex justify-center text-xs">
+            <span class="px-4 bg-white text-gray-400 font-semibold uppercase tracking-wider">OR CONTINUE WITH EMAIL</span>
+          </div>
+        </div>
+
+        <!-- Error Message Alert -->
+        @if (errorMessage()) {
+          <div class="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">
+            <i class="fa-solid fa-circle-exclamation text-base mt-0.5 shrink-0"></i>
+            <span>{{ errorMessage() }}</span>
+          </div>
+        }
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-5">
+          <!-- Email Input Field -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1.5">
+              Email address
+            </label>
+            <div class="relative rounded-xl shadow-2xs">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                <i class="fa-regular fa-envelope"></i>
+              </div>
+              <input
+                type="email"
+                id="email"
+                formControlName="email"
+                placeholder="name@freshcart.com"
+                class="block w-full pl-10 pr-4 py-3 text-sm text-gray-900 placeholder-gray-400 bg-gray-50/50 border rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-600 transition-all"
+                [class.border-red-300]="loginForm.get('email')?.touched && loginForm.get('email')?.invalid"
+                [class.border-gray-200]="!loginForm.get('email')?.touched || loginForm.get('email')?.valid"
+              />
+            </div>
+            @if (loginForm.get('email')?.touched && loginForm.get('email')?.invalid) {
+              <div class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                @if (loginForm.get('email')?.errors?.['required']) {
+                  <span>Email is required</span>
+                } @else if (loginForm.get('email')?.errors?.['email']) {
+                  <span>Please enter a valid email address</span>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Password Input Field with Eye Toggle Button -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1.5">
+              Password
+            </label>
+            <div class="relative rounded-xl shadow-2xs">
+              <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
+                <i class="fa-solid fa-lock"></i>
+              </div>
+              <input
+                [type]="showPassword() ? 'text' : 'password'"
+                id="password"
+                formControlName="password"
+                placeholder="••••••••"
+                class="block w-full pl-10 pr-11 py-3 text-sm text-gray-900 placeholder-gray-400 bg-gray-50/50 border rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-600 transition-all"
+                [class.border-red-300]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid"
+                [class.border-gray-200]="!loginForm.get('password')?.touched || loginForm.get('password')?.valid"
+              />
+              <button
+                type="button"
+                (click)="togglePasswordVisibility()"
+                aria-label="Toggle password visibility"
+                class="absolute inset-y-0 right-0 pr-3.5 flex items-center text-gray-400 hover:text-gray-600 cursor-pointer transition-colors"
+              >
+                <i [class]="showPassword() ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'"></i>
+              </button>
+            </div>
+            @if (loginForm.get('password')?.touched && loginForm.get('password')?.invalid) {
+              <div class="mt-1.5 text-xs text-red-600 flex items-center gap-1">
+                @if (loginForm.get('password')?.errors?.['required']) {
+                  <span>Password is required</span>
+                } @else if (loginForm.get('password')?.errors?.['minlength']) {
+                  <span>Password must be at least 6 characters</span>
+                }
+              </div>
+            }
+          </div>
+
+          <!-- Utilities Row: Remember Me & Forgot Password Link -->
+          <div class="flex items-center justify-between text-sm">
+            <label class="flex items-center gap-2 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                id="remember-me"
+                class="w-4 h-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500/30 transition-colors"
+              />
+              <span class="text-gray-600 font-medium">Remember me</span>
+            </label>
+            <a
+              routerLink="/forgot-password"
+              class="font-medium text-primary-600 hover:text-primary-700 hover:underline transition-colors"
+            >
+              Forgot your password?
+            </a>
+          </div>
+
+          <!-- Primary Sign In Submit Button -->
+          <button
+            type="submit"
+            [disabled]="isLoading()"
+            class="w-full bg-primary-600 hover:bg-primary-700 text-white font-semibold py-3.5 px-6 rounded-xl shadow-lg shadow-primary-600/20 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer hover:shadow-primary-600/30 hover:-translate-y-0.5 active:translate-y-0 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
+          >
+            @if (isLoading()) {
+              <i class="fa-solid fa-spinner fa-spin text-sm"></i>
+              <span>Signing in...</span>
+            } @else {
+              <span>Sign In</span>
+              <i class="fa-solid fa-arrow-right text-sm"></i>
+            }
+          </button>
+        </form>
+
+        <!-- Bottom Sign-Up Prompt & Security Badges -->
+        <div class="mt-8 pt-6 border-t border-gray-100 text-center text-sm text-gray-500">
+          <span>New to FreshCart? </span>
+          <a
+            routerLink="/register"
+            class="font-semibold text-primary-600 hover:text-primary-700 hover:underline transition-colors ms-1 cursor-pointer"
+          >
+            Create an account
+          </a>
+        </div>
+
+        <div class="flex items-center justify-center space-x-6 mt-6 text-xs text-gray-400">
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-lock text-gray-400"></i>
+            <span>256-bit SSL encryption</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-halved text-gray-400"></i>
+            <span>Secure shopping</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
