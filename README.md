@@ -12,7 +12,7 @@ A production-grade, pixel-accurate e-commerce web application engineered with **
 ## 👤 Author & Developer
 
 **Karam Ahmed Dakhlalah**  
-*Senior Frontend / Full-Stack Software Engineer*
+*Junior Frontend Engineer*
 
 - **LinkedIn:** [linkedin.com/in/dakhlala](https://www.linkedin.com/in/dakhlala/)  
 - **GitHub:** [github.com/Dakhlala](https://github.com/Dakhlala)  
