@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="cartGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" />
+      <stop offset="100%" stop-color="#16a34a" />
+    </linearGradient>
+  </defs>
+  <!-- Emerald Rounded Background -->
+  <rect width="64" height="64" rx="16" fill="url(#cartGrad)" />
+  <!-- White Shopping Cart Icon -->
+  <path fill="#ffffff" transform="translate(14, 16) scale(0.0625)" d="M0 24C0 10.7 10.7 0 24 0H96c11.5 0 21.4 8.2 23.6 19.5L123.9 40H552c13.3 0 24 10.7 24 24c0 3-.5 6-1.5 8.8L518.2 248.8c-7.9 22.4-29.2 37.2-53 37.2H170.8l-8.4 42H480c13.3 0 24 10.7 24 24s-10.7 24-24 24H144c-11.5 0-21.4-8.2-23.6-19.5l-51.7-258.5-7.3-36.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+</svg>
+
